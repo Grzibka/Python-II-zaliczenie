@@ -1,0 +1,22 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+    <h1>Wpisy</h1>
+    {% for entry in entries %}
+    <h2>{{ entry.title }}</h2>
+    <p>{{ entry.content }}</p>
+    {% for photo in entry.photos.all %}
+        {% if photo.image %}
+            <img src="{{ photo.image.url }}" alt="Photo for entry: {{ entry.title }}" width="300" height="300" style="object-fit: contain;">
+        {% else %}
+
+        {% endif %}
+
+        {% if user.is_authenticated and user.is_superuser %}
+        <a href="{% url 'delete_entry' entry_id=entry.id %}">Usuń wpis</a>
+    {% endif %}
+    {% endfor %}
+{% endfor %}
+
+
+{% endblock %}
